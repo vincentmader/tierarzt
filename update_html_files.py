@@ -7,7 +7,7 @@ import os
 from PIL import Image
 
 from config import PROJECT_PATH, NOTDIENST_DATES
-from time_methods import get_quarters_that_need_update, get_all_quarters, get_current_quarter
+import time_methods as tm
 
 
 def alphabetize(image):
@@ -31,18 +31,20 @@ def create_gallery_bottom(quarter):
     for idx, word in enumerate(words):
         if word == '<!--markerSeitenleisteAlt-->':
             html_code += '\n\t\t\t\t'
-            for q in reversed(get_all_quarters()):
+            for q in reversed(tm.get_all_quarters()):
                 if q[:2] != dt.now().strftime('%y'):
                     if q == quarter:
                         html_code += '<a class=\"subnav1active\" href=\"gallery_{}.html\" >'.format(
                             q)
                         html_code += '{}. Quartal 20{}</a>\n\t\t\t\t'.format(
-                            q[3:4], q[0:2])
+                            q[3:4], q[0:2]
+                        )
                     else:
                         html_code += '<a class=\"subnav1\" href=\"gallery_{}.html\" >'.format(
                             q)
                         html_code += '{}. Quartal 20{}</a>\n\t\t\t\t'.format(
-                            q[3:4], q[0:2])
+                            q[3:4], q[0:2]
+                        )
         elif word == '<!--markerAktualisiert-->':
             html_code += dt.now().strftime('%d.%m.%Y')
         elif word == '<!--markerGalleryYear-->':
@@ -96,7 +98,7 @@ def create_gallery_top(quarter):
             )
         elif word == '<!--markerGalleryKeywords-->':
             html_code += 'Galerie {} Quartal {}'.format(
-                dt.now().year, get_current_quarter()[3:4]
+                dt.now().year, tm.get_current_quarter()[3:4]
             )
         elif word == '<!--markerGalleryYear-->':
             html_code += '{} '.format(dt.now().year)
@@ -104,10 +106,10 @@ def create_gallery_top(quarter):
             html_code += '<div class=\"menu-separator\"></div>'
             html_code += '<a class=\"topmenuactive\"'
             html_code += 'href=\"gallery_{}.html\">Bilder</a>\n'.format(
-                get_current_quarter()
+                tm.get_current_quarter()
             )
         elif word == '<!--markerSeitenleisteNeu-->':
-            for i in range(1, int(get_current_quarter()[3:4]) + 1):
+            for i in range(1, int(tm.get_current_quarter()[3:4]) + 1):
                 html_code += "\n\t\t\t\t"
                 if '{}Q{}'.format(dt.now().strftime('%y'), i) == quarter:
                     html_code += '<a class=\"subnav1active\" href=\"gallery_'
@@ -175,7 +177,7 @@ def update_galleries():
     """create HTML file for each quarter's picture gallery"""
 
     print('  Erzeuge Galerien')
-    for quarter in get_quarters_that_need_update():
+    for quarter in tm.get_quarters_that_need_update():
         print('    Quartal {}'.format(quarter))
         create_thumbnails(quarter)
 
@@ -200,7 +202,7 @@ def update_index():
         if word == '<!--markerMenuGalleryLink-->':
             html_code += '<div class=\"menu-separator\"></div><a class="topmenu"'
             html_code += 'href=\"gallery_{}.html\">Bilder</a>\n'.format(
-                get_current_quarter())
+                tm.get_current_quarter())
         elif word == '<!--markerNotdienst-->':
             if currently_notdienst():
                 html_code += """
@@ -241,7 +243,7 @@ def update_links():
                 html_code += '<div class=\"menu-separator\"></div>'
                 html_code += '<a class=\"topmenu\"'
                 html_code += 'href=\"gallery_{}.html\">Bilder</a>\n'.format(
-                    get_current_quarter()
+                    tm.get_current_quarter()
                 )
             elif word == '<!--markerGalleryYear-->':
                 html_code += str(dt.now().year) + ' '

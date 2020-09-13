@@ -43,7 +43,10 @@ def get_current_quarter():
 
 def get_quarter_from_date(date):
     year_num = date.split('-')[0][2:]
-    quarter_num = {1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2, 7: 3, 8: 3, 9: 3, 10: 4, 11: 4, 12: 4}[int(date.split('-')[1])]
+    quarter_num = {
+        1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2,
+        7: 3, 8: 3, 9: 3, 10: 4, 11: 4, 12: 4
+    }[int(date.split('-')[1])]
     return '{}Q{}'.format(year_num, quarter_num)
 
 
@@ -55,4 +58,3 @@ def get_quarters_that_need_update():
         return get_all_quarters(start='12Q3')
 
     return get_all_quarters(start=get_quarter_from_date(last_update))
-

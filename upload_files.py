@@ -6,7 +6,7 @@ import json
 import os
 
 from config import PROJECT_PATH
-from time_methods import get_all_quarters, get_current_quarter, get_quarter_from_date
+import time_methods as tm
 
 
 def create_folder_structure(ftp):
@@ -18,7 +18,7 @@ def create_folder_structure(ftp):
     ftp.dir(image_folders.append)
     image_folders = [i.split(' ')[-1] for i in image_folders]
 
-    for quarter in get_all_quarters():
+    for quarter in tm.get_all_quarters():
         if 'Images_{}'.format(quarter) not in image_folders:
             ftp.mkd('Images_{}'.format(quarter))
             ftp.cwd('Images_{}'.format(quarter))
@@ -26,7 +26,8 @@ def create_folder_structure(ftp):
 
 
 def get_ftp_creds():
-    with open('ftp_creds.json') as fp:
+    path_to_creds = os.path.join(PROJECT_PATH, 'ftp_creds.json')
+    with open(path_to_creds) as fp:
         content = json.load(fp)
         server = content['server']
         user = content['user']
@@ -47,28 +48,32 @@ def main():
 
     with open('{}last_update.json'.format(PROJECT_PATH)) as fp:
         last_update = json.load(fp)[0]
-        quarter_of_last_update = get_quarter_from_date(last_update)
+        quarter_of_last_update = tm.get_quarter_from_date(last_update)
 
-    # case 1: site has been updated during this quarter already -> upload index + new images
-    if quarter_of_last_update == get_current_quarter():
+    # case 1:
+        # site has been updated during this quarter already
+        # -> upload index + new images
+    if quarter_of_last_update == tm.get_current_quarter():
         # create folder structure for image upload
         create_folder_structure(ftp)
         print('  Lade Bilder hoch')
         # upload new images
-        upload_new_images(ftp, get_current_quarter())
+        upload_new_images(ftp, tm.get_current_quarter())
         print('  Lade HTML-Dateien hoch')
         # upload index
         upload_index(ftp)
         # upload gallery for current quarter
-        upload_gallery(ftp, get_current_quarter())
+        upload_gallery(ftp, tm.get_current_quarter())
 
-    # case 2: site has not yet been updated -> upload all html files + new images
+    # case 2:
+        # site has not yet been updated
+        # -> upload all html files + new images
     else:
         # create folder structure for image upload
         create_folder_structure(ftp)
         print('  Lade Bilder hoch')
         # upload new images
-        for quarter in get_all_quarters(start=quarter_of_last_update):
+        for quarter in tm.get_all_quarters(start=quarter_of_last_update):
             upload_new_images(ftp, quarter)
         print('  Lade HTML-Dateien hoch')
         # upload all html files (so that links are correct)
@@ -116,7 +121,8 @@ def upload_new_images(ftp, quarter):
 
     images = [' '.join(i.split(' ')[11:])
               for i in images if i.lower().endswith('.jpg')]
-    for image in sorted(os.listdir('{}site/media/Images_{}'.format(PROJECT_PATH, quarter))):
+    path_to_images = f'{PROJECT_PATH}site/media/Images_{quarter}'
+    for image in sorted(os.listdir(path_to_images)):
         if not image.lower().endswith('.jpg'):
             continue
 
@@ -131,14 +137,18 @@ def upload_new_images(ftp, quarter):
         print('      {}'.format(image))
 
         ftp.cwd('/media/Images_{}'.format(quarter))
-        with open('{}site/media/Images_{}/{}'.format(PROJECT_PATH, quarter, image), 'rb') as fp:
+        path_to_file = f'{PROJECT_PATH}site/media/Images_{quarter}/{image}'
+        with open(path_to_file, 'rb') as fp:
             ftp.storbinary('STOR {}'.format(image), fp)
 
         # also upload thumbnail
         ftp.cwd('/media/Images_{}/thumbnails'.format(quarter))
-        thumbnail = '.'.join(image.split('.')[:-1]) + '_100.jpg'
-        with open('{}site/media/Images_{}/thumbnails/{}'.format(PROJECT_PATH, quarter, thumbnail), 'rb') as fp:
-            ftp.storbinary('STOR {}'.format(thumbnail), fp)
+        thumbnail_filename = '.'.join(image.split('.')[:-1]) + '_100.jpg'
+        path_to_file = '{}site/media/Images_{}/thumbnails/{}'.format(
+            PROJECT_PATH, quarter, thumbnail_filename
+        )
+        with open(path_to_file, 'rb') as fp:
+            ftp.storbinary('STOR {}'.format(thumbnail_filename), fp)
 
 
 if __name__ == '__main__':

@@ -13,9 +13,8 @@ def create_folder_structure():
     for quarter in get_all_quarters():
         media_location = os.path.join(PROJECT_PATH, 'site/media/')
         if 'Images_{}'.format(quarter) not in os.listdir(media_location):
-            os.system('mkdir "{}/Images_{}"'.format(media_location, quarter))
-            os.system(
-                'mkdir "{}/Images_{}/thumbnails"'.format(media_location, quarter))
+            os.system(f'mkdir "{media_location}/Images_{quarter}"')
+            os.system(f'mkdir "{media_location}/Images_{quarter}/thumbnails"')
 
 
 def get_correct_filename(filename, media_folder_path):
@@ -28,7 +27,9 @@ def get_correct_filename(filename, media_folder_path):
         if filename.startswith(name_of_pet):
             number_of_files_with_same_name_in_media_folder += 1
 
-    return '{}{}'.format(name_of_pet, number_of_files_with_same_name_in_media_folder + 1)
+    return '{}{}'.format(
+        name_of_pet, number_of_files_with_same_name_in_media_folder + 1
+    )
 
 
 def main():
