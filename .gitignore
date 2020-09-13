@@ -4,3 +4,10 @@ venv
 log
 .DS_Store
 .idea
+log.txt
+last_update.json
+run.sh
+run.py
+various
+templates
+ftp_creds.json
