@@ -1,0 +1,6 @@
+__pycache__
+site
+venv
+log
+.DS_Store
+.idea
