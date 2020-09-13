@@ -39,7 +39,6 @@ def main():
     """connect to server using FTP, upload files"""
 
     print('Verbinde mit Server')
-    # ftp = ftplib.FTP('xn--tierarztpraxis-schuffelen-2ec.de')
     server, user, passwd = get_ftp_creds()
     ftp = ftplib.FTP(server)
     ftp.encoding = 'utf-8'
