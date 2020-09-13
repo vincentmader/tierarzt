@@ -122,6 +122,7 @@ def upload_new_images(ftp, quarter):
     images = [' '.join(i.split(' ')[11:])
               for i in images if i.lower().endswith('.jpg')]
     path_to_images = f'{PROJECT_PATH}site/media/Images_{quarter}'
+    print(os.listdir(path_to_images))
     for image in sorted(os.listdir(path_to_images)):
         if not image.lower().endswith('.jpg'):
             continue
@@ -132,7 +133,10 @@ def upload_new_images(ftp, quarter):
             if file_info.endswith(image):
                 image_already_on_server = True
         if image_already_on_server:
+            # switch the commentation on the two lines below to toggle
+            # reupload of all images in the currently processed quarter(s)
             continue
+            # pass
 
         print('      {}'.format(image))
 

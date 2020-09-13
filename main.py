@@ -14,7 +14,7 @@ if __name__ == '__main__':
     print('\n\n\nTIERARZT v.3.0')
     print('-' * 79)
     print('Gespeichert unter')
-    print(f'\t{PROJECT_PATH}')
+    print(f'  {PROJECT_PATH}')
     print('-' * 79 + '\n')
 
     collect_images.main()

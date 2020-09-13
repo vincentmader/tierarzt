@@ -4,13 +4,13 @@ from datetime import datetime as dt
 import os
 
 from config import PROJECT_PATH, IMAGE_DUMP_PATH, LOG_FILE_PATH
-from time_methods import get_all_quarters, get_current_quarter
+import time_methods as tm
 
 
 def create_folder_structure():
     """make sure that folders for all quarters are in media folder """
 
-    for quarter in get_all_quarters():
+    for quarter in tm.get_all_quarters():
         media_location = os.path.join(PROJECT_PATH, 'site/media/')
         if 'Images_{}'.format(quarter) not in os.listdir(media_location):
             os.system(f'mkdir "{media_location}/Images_{quarter}"')
@@ -39,7 +39,7 @@ def main():
     create_folder_structure()  # make sure media folders exist
 
     media_folder_path = '{}site/media/Images_{}/'.format(
-        PROJECT_PATH, get_current_quarter()
+        PROJECT_PATH, tm.get_current_quarter()
     )
     filenames = [
         f for f in os.listdir(IMAGE_DUMP_PATH)
