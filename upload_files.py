@@ -122,7 +122,7 @@ def upload_new_images(ftp, quarter):
     images = [' '.join(i.split(' ')[11:])
               for i in images if i.lower().endswith('.jpg')]
     path_to_images = f'{PROJECT_PATH}site/media/Images_{quarter}'
-    print(os.listdir(path_to_images))
+    # print(os.listdir(path_to_images))
     for image in sorted(os.listdir(path_to_images)):
         if not image.lower().endswith('.jpg'):
             continue

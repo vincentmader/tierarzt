@@ -14,6 +14,7 @@ def create_folder_structure():
         media_location = os.path.join(PROJECT_PATH, 'site/media/')
         if 'Images_{}'.format(quarter) not in os.listdir(media_location):
             os.system(f'mkdir "{media_location}/Images_{quarter}"')
+        if 'thumbnails' not in os.listdir(os.path.join(media_location, f'Images_{quarter}')):
             os.system(f'mkdir "{media_location}/Images_{quarter}/thumbnails"')
 
 
