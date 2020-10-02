@@ -32,3 +32,9 @@ if __name__ == '__main__':
 
     with open('{}/last_update.json'.format(PROJECT_PATH), 'w') as fp:
         json.dump([dt.now().strftime('%Y-%m-%d')], fp)
+
+    with open(f'{PROJECT_PATH}/log.txt') as fp:
+        content = fp.readlines()
+        content.append(dt.now().strftime('%Y-%m-%d %H:%M:%S') + ' script executed successfully' )
+    with open(f'{PROJECT_PATH}/log.txt', 'w') as fp:
+        fp.write(''.join(content))
