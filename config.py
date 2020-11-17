@@ -4,9 +4,8 @@ from datetime import datetime as dt
 import os
 
 
-IMAGE_DUMP_PATH = '/Users/meister/Public/Dropbox/Praxis-Photos/'
-CLOUD_PATH = '/Users/meister/Library/Mobile Documents/com~apple~CloudDocs/'
-PROJECT_PATH = os.path.join(CLOUD_PATH, 'Documents/code/tierarzt') + '/'
+IMAGE_DUMP_PATH = '/home/vinc/Dropbox/Praxis-Photos/'
+PROJECT_PATH = '/home/vinc/tierarzt/'
 LOG_FILE_PATH = os.path.join(PROJECT_PATH, 'log.txt')
 
 FIRST_QUARTER = '12Q3'
