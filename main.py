@@ -11,7 +11,7 @@ START_TIME = dt.now()
 
 if __name__ == '__main__':
 
-    print('\n\n\nTIERARZT v.3.0')
+    print('\n\n\nTIERARZT v3.0')
     print('-' * 79)
     print('Gespeichert unter')
     print(f'  {PROJECT_PATH}')
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     run_time_minutes = str((END_TIME - START_TIME).seconds / 60).split('.')[0]
     run_time_seconds = (END_TIME - START_TIME).seconds % 60
 
-    print('\n' + '-' * 70)
+    print('\n' + '-' * 79)
     print('Laufzeit: {} Minuten {} Sekunden\n'.format(
         run_time_minutes, run_time_seconds)
     )
