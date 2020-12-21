@@ -5,7 +5,7 @@ import os
 
 
 IMAGE_DUMP_PATH = '/home/vinc/Dropbox/Praxis-Photos/'
-PROJECT_PATH = '/home/vinc/tierarzt/'
+PROJECT_PATH = '/home/vinc/code/tierarzt/'
 LOG_FILE_PATH = os.path.join(PROJECT_PATH, 'log.txt')
 
 FIRST_QUARTER = '12Q3'
