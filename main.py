@@ -35,6 +35,9 @@ if __name__ == '__main__':
 
     with open(f'{PROJECT_PATH}/log.txt') as fp:
         content = fp.readlines()
-        content.append(dt.now().strftime('%Y-%m-%d %H:%M:%S') + ' script executed successfully' )
+        content.append(
+            '\n' + dt.now().strftime('%Y-%m-%d %H:%M:%S') +
+            ', script executed successfully\n'
+        )
     with open(f'{PROJECT_PATH}/log.txt', 'w') as fp:
         fp.write(''.join(content))

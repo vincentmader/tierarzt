@@ -42,29 +42,27 @@ def main():
     media_folder_path = '{}site/media/Images_{}/'.format(
         PROJECT_PATH, tm.get_current_quarter()
     )
-    filenames = [
+    filenames = sorted([
         f for f in os.listdir(IMAGE_DUMP_PATH)
         if f not in ['.DS_Store', 'Icon\r']
-    ]
+    ])
 
     # create log for dropbox folder content
     if filenames:
         with open(LOG_FILE_PATH, 'r') as fp:
             log = ''.join(fp.readlines())
 
+        log += '\n'
         log += dt.now().strftime('%Y-%m-%d %H:%M:%S, ')
         log += 'content of dropbox folder:\n'
         for filename in filenames:
             log += f'{filename}\n'
-        log += '\n'
+            log += '\n'
 
         with open(LOG_FILE_PATH, 'w') as fp:
             fp.write(log)
 
     for filename in filenames:  # ends in '.jpg'
-        # if not filename.lower().endswith('.jpg'):
-        #     continue
-
         # change filename if already in media folder
         pet_name = '.'.join(filename.split('.')[:-1])  # does not end in '.jpg'
         new_filename = get_correct_filename(pet_name, media_folder_path)
