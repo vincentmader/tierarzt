@@ -75,4 +75,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if not IMAGE_DUMP_PATH:
+        pass  # cannot collect images if dropbox is not set up
+    else:
+        main()
