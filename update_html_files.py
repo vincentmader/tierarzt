@@ -133,14 +133,16 @@ def create_gallery_top(quarter):
 def create_thumbnails(quarter):
     """create thumbnails for all images inside a given quarter folder"""
 
-    for image_file in os.listdir(
+    for image_file in sorted(os.listdir(
         '{}/site/media/Images_{}'.format(PROJECT_PATH, quarter)
-    ):
-        if image_file.lower().endswith('.jpg'):
+    )):
+        if image_file.lower().endswith('.jpg') or image_file.lower().endswith('jpeg'):
             image_name = '.'.join(image_file.split('.')[:-1])
 
-            img = Image.open('{}/site/media/Images_{}/{}'.format(
-                PROJECT_PATH, quarter, image_file)
+            img = Image.open(os.path.join(
+                PROJECT_PATH, 'site/media/Images_{}/{}'.format(
+                    quarter, image_file)
+                )
             )
             img.thumbnail((100, 100), Image.ANTIALIAS)
             img_save_path = os.path.join(

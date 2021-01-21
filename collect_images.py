@@ -19,7 +19,9 @@ def create_folder_structure():
 
 
 def get_correct_filename(filename, media_folder_path):
-    name_of_pet = filename
+
+    name_of_pet = '.'.join(filename.split('.')[:-1])  # does not end in '.jpg'
+
     while name_of_pet[-1].isnumeric() or name_of_pet[-1] == ' ':
         name_of_pet = name_of_pet[:-1]
 
@@ -63,13 +65,14 @@ def main():
             fp.write(log)
 
     for filename in filenames:  # ends in '.jpg'
+        file_extension = filename.split('.')[-1]
         # change filename if already in media folder
-        pet_name = '.'.join(filename.split('.')[:-1])  # does not end in '.jpg'
-        new_filename = get_correct_filename(pet_name, media_folder_path)
+        new_filename = get_correct_filename(filename, media_folder_path)
 
         os.system(
-            'mv "{}{}" "{}{}.jpg"'.format(
-                IMAGE_DUMP_PATH, filename, media_folder_path, new_filename
+            'mv "{}{}" "{}{}.{}"'.format(
+                IMAGE_DUMP_PATH, filename, 
+                media_folder_path, new_filename, file_extension
             )
         )
 
