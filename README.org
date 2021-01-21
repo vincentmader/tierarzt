@@ -1,0 +1,3 @@
+This is a collection of scripts used to maintain the
+[[http://tierarztpraxis-schäuffelen.de][web site]]
+(i.e. mostly the image gallery) of my mother's veterinary clinic.
