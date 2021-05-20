@@ -133,17 +133,18 @@ def create_gallery_top(quarter):
 def create_thumbnails(quarter):
     """create thumbnails for all images inside a given quarter folder"""
 
-    for image_file in sorted(os.listdir(
+    filenames = os.listdir(
         '{}/site/media/Images_{}'.format(PROJECT_PATH, quarter)
-    )):
-        if image_file.lower().endswith('.jpg') or image_file.lower().endswith('jpeg'):
+    )
+    for image_file in sorted(filenames):
+        if image_file.lower().endswith('.jpg') or image_file.lower().endswith('.jpeg'):
             image_name = '.'.join(image_file.split('.')[:-1])
 
             img = Image.open(os.path.join(
                 PROJECT_PATH, 'site/media/Images_{}/{}'.format(
-                    quarter, image_file)
+                    quarter, image_file
                 )
-            )
+            ))
             img.thumbnail((100, 100), Image.ANTIALIAS)
             img_save_path = os.path.join(
                 PROJECT_PATH,
@@ -152,6 +153,19 @@ def create_thumbnails(quarter):
                 )
             )
             img.save(img_save_path)
+        # TODO: write to log if ext != jp(e)g (e.g. iPhone portrait imgs)
+        # else:
+        #     # create log for dropbox folder content
+        #     if filenames:
+        #         with open(LOG_FILE_PATH, 'r') as fp:
+        #             log = ''.join(fp.readlines())
+
+        #         log += '\n'
+        #         log += dt.now().strftime('%Y-%m-%d %H:%M:%S, ')
+        #         log += 'content of dropbox folder:\n'
+        #         for filename in filenames:
+        #             log += f'{filename}\n'
+        #             log += '\n'
 
 
 def currently_notdienst():

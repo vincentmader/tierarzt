@@ -71,7 +71,7 @@ def main():
 
         os.system(
             'mv "{}{}" "{}{}.{}"'.format(
-                IMAGE_DUMP_PATH, filename, 
+                IMAGE_DUMP_PATH, filename,
                 media_folder_path, new_filename, file_extension
             )
         )
